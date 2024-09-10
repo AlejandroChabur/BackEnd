@@ -15,6 +15,13 @@ namespace BackEnd.Context
         public DbSet<IdentificationType> identificationTypes { get; set; }
         public DbSet<People> people { get; set; }
         public DbSet<Authors> authors { get; set; }
+        public DbSet<Books> books { get; set; }
+        public DbSet<Edition> editions { get; set; }
+        public DbSet<Topics> topics { get; set; }
+        public DbSet<Editorials> editorials { get; set; }
+        public DbSet<Loans> loans { get; set; }
+        public DbSet<Reports> reports { get; set; }
+        public DbSet<Formats> formats { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
