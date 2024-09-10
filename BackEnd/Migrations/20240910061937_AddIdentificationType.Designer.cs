@@ -4,6 +4,7 @@ using BackEnd.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(TestDbContext))]
-    partial class TestDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240910061937_AddIdentificationType")]
+    partial class AddIdentificationType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,6 +54,11 @@ namespace BackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -81,9 +89,11 @@ namespace BackEnd.Migrations
 
                     b.HasIndex("IdentificationTypeId");
 
-                    b.ToTable("People", (string)null);
+                    b.ToTable("people");
 
-                    b.UseTptMappingStrategy();
+                    b.HasDiscriminator().HasValue("People");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("BackEnd.Model.User", b =>
@@ -118,8 +128,6 @@ namespace BackEnd.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPersona");
-
                     b.HasIndex("UserTypeId");
 
                     b.ToTable("Users");
@@ -150,7 +158,7 @@ namespace BackEnd.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Authors", (string)null);
+                    b.HasDiscriminator().HasValue("Authors");
                 });
 
             modelBuilder.Entity("BackEnd.Model.People", b =>
@@ -166,12 +174,6 @@ namespace BackEnd.Migrations
 
             modelBuilder.Entity("BackEnd.Model.User", b =>
                 {
-                    b.HasOne("BackEnd.Model.People", null)
-                        .WithMany()
-                        .HasForeignKey("IdPersona")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BackEnd.Model.UserType", "UserType")
                         .WithMany()
                         .HasForeignKey("UserTypeId")
@@ -179,15 +181,6 @@ namespace BackEnd.Migrations
                         .IsRequired();
 
                     b.Navigation("UserType");
-                });
-
-            modelBuilder.Entity("BackEnd.Model.Authors", b =>
-                {
-                    b.HasOne("BackEnd.Model.People", null)
-                        .WithOne()
-                        .HasForeignKey("BackEnd.Model.Authors", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
