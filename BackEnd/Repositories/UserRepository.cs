@@ -1,8 +1,8 @@
 ﻿using System;
 
-public interface WebApllication Repositories
+public interface IUserRepository
 {
-	public Class1()
-	{
-	}
+	Task<IEnumerable<IUserRepository >>	
+
+
 }
