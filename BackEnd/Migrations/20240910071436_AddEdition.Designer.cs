@@ -4,6 +4,7 @@ using BackEnd.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(TestDbContext))]
-    partial class TestDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240910071436_AddEdition")]
+    partial class AddEdition
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,40 +71,6 @@ namespace BackEnd.Migrations
                     b.ToTable("editions");
                 });
 
-            modelBuilder.Entity("BackEnd.Model.Editorials", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("EditorialsName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("editorials");
-                });
-
-            modelBuilder.Entity("BackEnd.Model.Formats", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("FormatName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("formats");
-                });
-
             modelBuilder.Entity("BackEnd.Model.IdentificationType", b =>
                 {
                     b.Property<int>("Id")
@@ -117,30 +86,6 @@ namespace BackEnd.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("identificationTypes");
-                });
-
-            modelBuilder.Entity("BackEnd.Model.Loans", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateOnly>("LoanDate")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly>("ReturnDate")
-                        .HasColumnType("date");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("loans");
                 });
 
             modelBuilder.Entity("BackEnd.Model.People", b =>
@@ -188,45 +133,6 @@ namespace BackEnd.Migrations
                     b.ToTable("People", (string)null);
 
                     b.UseTptMappingStrategy();
-                });
-
-            modelBuilder.Entity("BackEnd.Model.Reports", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("LoansId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LoansId");
-
-                    b.ToTable("reports");
-                });
-
-            modelBuilder.Entity("BackEnd.Model.Topics", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("TopicName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("topics");
                 });
 
             modelBuilder.Entity("BackEnd.Model.User", b =>
@@ -307,17 +213,6 @@ namespace BackEnd.Migrations
                     b.Navigation("Edition");
                 });
 
-            modelBuilder.Entity("BackEnd.Model.Loans", b =>
-                {
-                    b.HasOne("BackEnd.Model.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("BackEnd.Model.People", b =>
                 {
                     b.HasOne("BackEnd.Model.IdentificationType", "IdentificationType")
@@ -327,17 +222,6 @@ namespace BackEnd.Migrations
                         .IsRequired();
 
                     b.Navigation("IdentificationType");
-                });
-
-            modelBuilder.Entity("BackEnd.Model.Reports", b =>
-                {
-                    b.HasOne("BackEnd.Model.Loans", "Loans")
-                        .WithMany()
-                        .HasForeignKey("LoansId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Loans");
                 });
 
             modelBuilder.Entity("BackEnd.Model.User", b =>
