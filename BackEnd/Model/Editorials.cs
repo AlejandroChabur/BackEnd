@@ -7,3 +7,4 @@
         public string EditorialsName { get; set; }
     }
 }
+    
