@@ -3,6 +3,6 @@
     public class Authors : People
     {
         public required string Country { get; set; }
-        // Edwindnndnd
+        
     }
 }
