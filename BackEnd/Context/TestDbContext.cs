@@ -22,6 +22,8 @@ namespace BackEnd.Context
         public DbSet<Loans> Loans { get; set; }
         public DbSet<Reports> Reports { get; set; }
         public DbSet<Formats> Formats { get; set; }
+        public DbSet<BooksXTopics> BooksXTopics { get; set; }
+        public object BooksXAuthors { get; internal set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,15 +45,98 @@ namespace BackEnd.Context
 
             // Configuración de la herencia entre People y Authors
             modelBuilder.Entity<Authors>()
-                .ToTable("Authors") // Especifica la tabla para Authors
-                .HasBaseType<People>(); // Establece que Authors hereda de People
+                .ToTable("Authors")
+                .HasBaseType<People>();
 
-            // Configuración adicional para Authors
             modelBuilder.Entity<Authors>()
                 .Property(a => a.Country)
-                .IsRequired(); // Especifica que el campo Country es requerido
+                .IsRequired();
+
+            // Configuración de BooksXAuthors
+            modelBuilder.Entity<BooksXAuthors>()
+                .HasKey(ba => new { ba.BookId, ba.IdPersona });  // Clave compuesta
+
+            modelBuilder.Entity<BooksXAuthors>()
+                .HasOne(ba => ba.Books)
+                .WithMany(b => b.BooksXAuthors)
+                .HasForeignKey(ba => ba.BookId);
+
+            modelBuilder.Entity<BooksXAuthors>()
+                .HasOne(ba => ba.People)
+                .WithMany() // Se puede especificar la colección si tienes una propiedad de navegación en People
+                .HasForeignKey(ba => ba.IdPersona);
+
+            modelBuilder.Entity<BooksXTopics>()
+            .HasKey(ab => new { ab.BookId, ab.TopicId });  // Clave compuesta
+
+            modelBuilder.Entity<BooksXTopics>()
+                .HasOne(ab => ab.Books)
+                .WithMany(a => a.BooksXTopics)
+                .HasForeignKey(ab => ab.BookId);
+
+            modelBuilder.Entity<BooksXTopics>()
+                .HasOne(ab => ab.Topics)
+                .WithMany(b => b.BooksXTopics)
+                .HasForeignKey(ab => ab.TopicId);
+
+            modelBuilder.Entity<BooksXAuthors>()
+            .HasKey(ab => new { ab.BookId, ab.IdPeople });  // Clave compuesta
+
+            modelBuilder.Entity<BooksXAuthors>()
+                .HasOne(ab => ab.Books)
+                .WithMany(a => a.BooksXAuthors)
+                .HasForeignKey(ab => ab.BookId);
+
+            modelBuilder.Entity<BooksXAuthors>()
+                .HasOne(ab => ab.People)
+                .WithMany(b => b.BooksXAuthors)
+                .HasForeignKey(ab => ab.IdPeople);
+
+            modelBuilder.Entity<BooksXLoans>()
+           .HasKey(ab => new { ab.BookId, ab.IdLoans });  // Clave compuesta
+
+            modelBuilder.Entity<BooksXLoans>()
+                .HasOne(ab => ab.Books)
+                .WithMany(a => a.BooksXLoans)
+                .HasForeignKey(ab => ab.BookId);
+
+            modelBuilder.Entity<BooksXLoans>()
+                .HasOne(ab => ab.Loans)
+                .WithMany(b => b.BooksXLoans)
+                .HasForeignKey(ab => ab.IdLoans);
+
+            modelBuilder.Entity<BooksXEditorials>()
+           .HasKey(ab => new { ab.BookId, ab.IdEditorials });  // Clave compuesta
+
+            modelBuilder.Entity<BooksXEditorials>()
+                .HasOne(ab => ab.Books)
+                .WithMany(a => a.BooksXEditorials)
+                .HasForeignKey(ab => ab.BookId);
+
+            modelBuilder.Entity<BooksXEditorials>()
+                .HasOne(ab => ab.Editorials)
+                .WithMany(b => b.BooksXEditorials)
+                .HasForeignKey(ab => ab.IdEditorials);
+
+            modelBuilder.Entity<BooksXFormats>()
+          .HasKey(ab => new { ab.BookId, ab.IdFormats });  // Clave compuesta
+
+            modelBuilder.Entity<BooksXFormats>()
+                .HasOne(ab => ab.Books)
+                .WithMany(a => a.BooksXFormats)
+                .HasForeignKey(ab => ab.BookId);
+
+            modelBuilder.Entity<BooksXFormats>()
+                .HasOne(ab => ab.Formats)
+                .WithMany(b => b.BooksXFormats)
+                .HasForeignKey(ab => ab.IdFormats);
+
+
+
+
+
         }
 
-       
+
     }
 }
