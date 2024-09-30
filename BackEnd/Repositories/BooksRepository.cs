@@ -2,7 +2,7 @@
 using BackEnd.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace BackEnd.Repository
+namespace BackEnd.Repositories
 {
     public interface IBooksRepository
     {

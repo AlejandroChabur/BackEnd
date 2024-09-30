@@ -1,11 +1,11 @@
 ﻿namespace BackEnd.Model
 {
-    public class BooksXTopics
+    public class BooksXFormats
     {
         public int BookId { get; set; }
         public Books Books { get; set; }
 
-        public int TopicId { get; set; }
-        public Topics Topics { get; set; }
+        public int IdFormats { get; set; }
+        public Formats Formats   { get; set; }
     }
 }
