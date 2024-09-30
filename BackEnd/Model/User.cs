@@ -13,6 +13,6 @@ namespace BackEnd.Model
         public required string PhoneNumber { get; set; }
 
         public virtual required UserType UserType { get; set; }
-
+        public bool IsDeleted { get; internal set; }
     }
 }
