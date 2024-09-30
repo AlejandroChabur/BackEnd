@@ -11,6 +11,7 @@
         public required string MiddleName { get; set; }
         public required string LastName { get; set; }
         public required string SecondLastName { get; set; }
+        public required string PetName {  get; set; }
 
         public required string Address { get; set; }
 
