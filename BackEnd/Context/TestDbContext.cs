@@ -15,7 +15,8 @@ namespace BackEnd.Context
         public DbSet<IdentificationType> identificationTypes { get; set; }
         public DbSet<People> people { get; set; }
         public DbSet<Authors> authors { get; set; }
-        public DbSet<Books> books { get; set; }
+        public object Authors { get; internal set; }
+        public DbSet<Books> Books { get; set; }
         public DbSet<Edition> editions { get; set; }
         public DbSet<Topics> topics { get; set; }
         public DbSet<Editorials> editorials { get; set; }

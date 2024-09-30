@@ -32,7 +32,7 @@ namespace BackEnd.Repositories
         public async Task<Books> GetBooksByIdAsync(int id)
         {
             var book = await _context.Books
-                .FirstOrDefaultAsync(b => b.Id == id);
+                .FirstOrDefaultAsync(b => b.BookId == id);
 
             if (book == null)
             {
@@ -71,7 +71,7 @@ namespace BackEnd.Repositories
         public async Task UpdateBooksAsync(Books book)
         {
             // Busca el libro existente
-            var existingBook = await _context.Books.FindAsync(book.Id);
+            var existingBook = await _context.Books.FindAsync(book.BookId);
 
             if (existingBook != null)
             {
@@ -87,7 +87,7 @@ namespace BackEnd.Repositories
             else
             {
                 // Puedes lanzar una excepción o manejar el caso donde el libro no se encuentra
-                throw new KeyNotFoundException($"El libro con ID {book.Id} no se encontró.");
+                throw new KeyNotFoundException($"El libro con ID {book.BookId} no se encontró.");
             }
         }
 
