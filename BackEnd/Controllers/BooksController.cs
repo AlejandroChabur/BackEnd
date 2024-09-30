@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BackEnd.Model;
+﻿using BackEnd.Model;
 using BackEnd.Services;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BackEnd.Controllers
 {
@@ -10,67 +8,81 @@ namespace BackEnd.Controllers
     [Route("api/[controller]")]
     public class BooksController : ControllerBase
     {
-        private readonly IBooksService _booksService;
+        private readonly IBooksServices _booksService;
 
-        public BooksController(IBooksService booksService)
+        public BooksController(IBooksServices booksService)
         {
             _booksService = booksService;
         }
 
-        // GET: api/books
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Books>>> GetAllBooks()
         {
             var books = await _booksService.GetAllBooksAsync();
             return Ok(books);
         }
 
-        // GET: api/books/{id}
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Books>> GetBookById(int id)
         {
-            var book = await _booksService.GetBookByIdAsync(id);
+            var book = await _booksService.GetBooksByIdAsync(id);
             if (book == null)
+            {
                 return NotFound();
-
+            }
             return Ok(book);
         }
 
-        // POST: api/books
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult> CreateBook([FromBody] Books book)
         {
             if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
+            }
 
-            await _booksService.CreateBookAsync(book);
+            await _booksService.CreateBooksAsync(book);
+
             return CreatedAtAction(nameof(GetBookById), new { id = book.Id }, book);
         }
 
-        // PUT: api/books/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBook(int id, [FromBody] Books book)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateBook(int id, [FromBody] Books book, bool v)
         {
-            if (id != book.Id)
+            if (v)
+            {
                 return BadRequest();
+            }
 
-            var existingBook = await _booksService.GetBookByIdAsync(id);
+            var existingBook = await _booksService.GetBooksByIdAsync(id);
             if (existingBook == null)
+            {
                 return NotFound();
+            }
 
-            await _booksService.UpdateBookAsync(book);
+            await _booksService.UpdateBooksAsync(book);
             return NoContent();
         }
 
-        // DELETE: api/books/id
         [HttpDelete("{id}")]
-        public async Task<IActionResult> SoftDeleteBook(int id)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteBook(int id)
         {
-            var book = await _booksService.GetBookByIdAsync(id);
-            if (book == null)
+            var existingBook = await _booksService.GetBooksByIdAsync(id);
+            if (existingBook == null)
+            {
                 return NotFound();
+            }
 
-            await _booksService.SoftDeleteBookAsync(id);
+            await _booksService.DeleteBooksAsync(id);
             return NoContent();
         }
     }

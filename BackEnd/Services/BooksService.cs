@@ -1,57 +1,51 @@
 ﻿using BackEnd.Model;
-using BackEnd.Repositories.BackEnd.Repositories;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using BackEnd.Repository;
+using BackEnd.Context;
+using BackEnd.Repositories; // Asegúrate de que esta línea esté aquí y no dentro de un bloque
 
 namespace BackEnd.Services
 {
-    public interface IBooksService
+    public interface IBooksServices
     {
         Task<IEnumerable<Books>> GetAllBooksAsync();
-        Task<Books?> GetBookByIdAsync(int id);
-        Task CreateBookAsync(Books book);
-        Task UpdateBookAsync(Books book);
-        Task SoftDeleteBookAsync(int id);
+        Task<Books> GetBooksByIdAsync(int id);
+        Task CreateBooksAsync(Books book);
+        Task UpdateBooksAsync(Books book);
+        Task DeleteBooksAsync(int id);
     }
 
-
-
-namespace BackEnd.Services
+    public class BooksServices : IBooksServices
     {
-        public class BooksService : IBooksService
+        private readonly IBooksRepository _booksRepository;
+
+        public BooksServices(IBooksRepository booksRepository)
         {
-            private readonly IBooksRepository _booksRepository;
+            _booksRepository = booksRepository;
+        }
 
-            public BooksService(IBooksRepository booksRepository)
-            {
-                _booksRepository = booksRepository;
-            }
+        public async Task<IEnumerable<Books>> GetAllBooksAsync()
+        {
+            return await _booksRepository.GetAllBooksAsync();
+        }
 
-            public async Task<IEnumerable<Books>> GetAllBooksAsync()
-            {
-                return await _booksRepository.GetAllBooksAsync();
-            }
+        public async Task<Books> GetBooksByIdAsync(int id)
+        {
+            return await _booksRepository.GetBooksByIdAsync(id);
+        }
 
-            public async Task<Books?> GetBookByIdAsync(int id)
-            {
-                return await _booksRepository.GetBookByIdAsync(id);
-            }
+        public async Task CreateBooksAsync(Books book)
+        {
+            await _booksRepository.CreateBooksAsync(book);
+        }
 
-            public async Task CreateBookAsync(Books book)
-            {
-                await _booksRepository.CreateBookAsync(book);
-            }
+        public async Task UpdateBooksAsync(Books book)
+        {
+            await _booksRepository.UpdateBooksAsync(book);
+        }
 
-            public async Task UpdateBookAsync(Books book)
-            {
-                await _booksRepository.UpdateBookAsync(book);
-            }
-
-            public async Task SoftDeleteBookAsync(int id)
-            {
-                await _booksRepository.SoftDeleteBookAsync(id);
-            }
+        public async Task DeleteBooksAsync(int id)
+        {
+            await _booksRepository.DeleteBookAsync(id);
         }
     }
-
 }
