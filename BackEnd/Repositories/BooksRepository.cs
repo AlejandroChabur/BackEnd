@@ -25,6 +25,7 @@ namespace BackEnd.Repository
         public async Task<IEnumerable<Books>> GetAllBooksAsync()
         {
             return await _context.Books
+                .Include(b => b.Edition)
                 .ToListAsync();
         }
 
@@ -69,8 +70,27 @@ namespace BackEnd.Repository
 
         public async Task UpdateBooksAsync(Books book)
         {
-            _context.Books.Update(book);
-            await _context.SaveChangesAsync();
+            // Busca el libro existente
+            var existingBook = await _context.Books.FindAsync(book.Id);
+
+            if (existingBook != null)
+            {
+                // Solo actualiza las propiedades necesarias
+                existingBook.EditionId = book.EditionId;
+                existingBook.Title = book.Title;
+                existingBook.Code = book.Code;
+                existingBook.PublicationYear = book.PublicationYear;
+
+                // Guarda los cambios
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                // Puedes lanzar una excepción o manejar el caso donde el libro no se encuentra
+                throw new KeyNotFoundException($"El libro con ID {book.Id} no se encontró.");
+            }
         }
+
+
     }
 }
