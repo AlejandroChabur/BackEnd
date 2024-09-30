@@ -54,9 +54,9 @@ namespace BackEnd.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateBook(int id, [FromBody] Books book)
+        public async Task<IActionResult> UpdateBook(int id, [FromBody] Books book, bool v)
         {
-            if (id != book.Id)
+            if (v)
             {
                 return BadRequest();
             }

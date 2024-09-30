@@ -10,18 +10,18 @@ namespace BackEnd.Context
             
         }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserType> UserTypes { get; set; }
-
-        public DbSet<IdentificationType> IdentificationTypes { get; set; }
-        public DbSet<People> People { get; set; }
-        public DbSet<Authors> Authors { get; set; }
-        public DbSet<Books> Books { get; set; }
-        public DbSet<Edition> Editions { get; set; }
-        public DbSet<Topics> Topics { get; set; }
-        public DbSet<Editorials> Editorials { get; set; }
-        public DbSet<Loans> Loans { get; set; }
-        public DbSet<Reports> Reports { get; set; }
-        public DbSet<Formats> Formats { get; set; }
+        public DbSet<UserType> UserType { get; set; }
+       
+        public DbSet<IdentificationType> identificationTypes { get; set; }
+        public DbSet<People> people { get; set; }
+        public DbSet<Authors> authors { get; set; }
+        public DbSet<Books> books { get; set; }
+        public DbSet<Edition> editions { get; set; }
+        public DbSet<Topics> topics { get; set; }
+        public DbSet<Editorials> editorials { get; set; }
+        public DbSet<Loans> loans { get; set; }
+        public DbSet<Reports> reports { get; set; }
+        public DbSet<Formats> formats { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

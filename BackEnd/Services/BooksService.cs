@@ -1,5 +1,7 @@
 ﻿using BackEnd.Model;
 using BackEnd.Repository;
+using BackEnd.Context;
+using BackEnd.Repositories; // Asegúrate de que esta línea esté aquí y no dentro de un bloque
 
 namespace BackEnd.Services
 {
@@ -47,4 +49,3 @@ namespace BackEnd.Services
         }
     }
 }
-
