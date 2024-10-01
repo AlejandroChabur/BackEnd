@@ -1,51 +1,45 @@
 ﻿using BackEnd.Model;
-using BackEnd.Repositories; // Asegúrate de que esta línea esté aquí
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using BackEnd.Repository;
 
 namespace BackEnd.Services
 {
-    public interface ILoansServices
+    public class LoansService
     {
-        Task<IEnumerable<Loans>> GetAllLoansAsync();
-        Task<Loans> GetLoansByIdAsync(int id);
-        Task CreateLoansAsync(Loans loan);
-        Task UpdateLoansAsync(Loans loan);
-        Task DeleteLoansAsync(int id);
-    }
+        private readonly LoansRepository _loansRepository;
 
-    public class LoansServices : ILoansServices
-    {
-        private readonly ILoansRepository _loansRepository;
-
-        public LoansServices(ILoansRepository loansRepository)
+        public LoansService(LoansRepository loansRepository)
         {
             _loansRepository = loansRepository;
         }
 
+        // Obtener un préstamo por ID
+        public async Task<Loans> GetLoanByIdAsync(int id)
+        {
+            return await _loansRepository.GetLoanByIdAsync(id);
+        }
+
+        // Crear un nuevo préstamo
+        public async Task CreateLoanAsync(Loans loan)
+        {
+            await _loansRepository.CreateLoanAsync(loan);
+        }
+
+        // Obtener todos los préstamos
         public async Task<IEnumerable<Loans>> GetAllLoansAsync()
         {
             return await _loansRepository.GetAllLoansAsync();
         }
 
-        public async Task<Loans> GetLoansByIdAsync(int id)
+        // Actualizar un préstamo
+        public async Task UpdateLoanAsync(Loans loan)
         {
-            return await _loansRepository.GetLoansByIdAsync(id);
+            await _loansRepository.UpdateLoanAsync(loan);
         }
 
-        public async Task CreateLoansAsync(Loans loan)
+        // Eliminar un préstamo
+        public async Task DeleteLoanAsync(int id)
         {
-            await _loansRepository.CreateLoansAsync(loan);
-        }
-
-        public async Task UpdateLoansAsync(Loans loan)
-        {
-            await _loansRepository.UpdateLoansAsync(loan);
-        }
-
-        public async Task DeleteLoansAsync(int id)
-        {
-            await _loansRepository.DeleteLoansAsync(id);
+            await _loansRepository.DeleteLoanAsync(id);
         }
     }
 }

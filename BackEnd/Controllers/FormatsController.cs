@@ -37,7 +37,7 @@ namespace BackEnd.Controllers
         public async Task<ActionResult> CreateFormat([FromBody] Formats format)
         {
             await _formatsService.CreateFormatAsync(format);
-            return CreatedAtAction(nameof(GetFormatById), new { id = format.Id }, format);
+            return CreatedAtAction(nameof(GetFormatById), new { id = format.Id}, format);
         }
 
         [HttpPut("{id}")]

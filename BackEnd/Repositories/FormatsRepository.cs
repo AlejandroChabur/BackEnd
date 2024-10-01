@@ -16,7 +16,7 @@ namespace BackEnd.Repository
         // Obtener un formato por ID
         public async Task<Formats> GetFormatByIdAsync(int id)
         {
-            var format = await _context.Formats.FirstOrDefaultAsync(f => f.Id == id);
+            var format = await _context.Formats.FirstOrDefaultAsync(f => f.Id== id);
             if (format == null)
             {
                 throw new KeyNotFoundException($"Format with ID {id} not found.");

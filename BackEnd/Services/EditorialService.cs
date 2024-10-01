@@ -5,36 +5,36 @@ namespace BackEnd.Services
 {
     public class EditorialsService
     {
-        private readonly EditorialsRepository _editorialsRepository;
+        private readonly EditorialsRepository _EditorialsRepository;
 
-        public EditorialsService(EditorialsRepository editorialsRepository)
+        public EditorialsService(EditorialsRepository EditorialsRepository)
         {
-            _editorialsRepository = editorialsRepository;
+            _EditorialsRepository = EditorialsRepository;
         }
 
         public async Task<Editorials> GetEditorialByIdAsync(int id)
         {
-            return await _editorialsRepository.GetEditorialByIdAsync(id);
+            return await _EditorialsRepository.GetEditorialByIdAsync(id);
         }
 
         public async Task CreateEditorialAsync(Editorials editorial)
         {
-            await _editorialsRepository.CreateEditorialAsync(editorial);
+            await _EditorialsRepository.CreateEditorialAsync(editorial);
         }
 
         public async Task<IEnumerable<Editorials>> GetAllEditorialsAsync()
         {
-            return await _editorialsRepository.GetAllEditorialsAsync();
+            return await _EditorialsRepository.GetAllEditorialsAsync();
         }
 
         public async Task UpdateEditorialAsync(Editorials editorial)
         {
-            await _editorialsRepository.UpdateEditorialAsync(editorial);
+            await _EditorialsRepository.UpdateEditorialAsync(editorial);
         }
 
         public async Task DeleteEditorialAsync(int id)
         {
-            await _editorialsRepository.DeleteEditorialAsync(id);
+            await _EditorialsRepository.DeleteEditorialAsync(id);
         }
     }
 }

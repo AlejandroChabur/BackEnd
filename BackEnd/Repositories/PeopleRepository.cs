@@ -26,7 +26,7 @@ namespace BackEnd.Repositories
         public async Task<IEnumerable<People>> GetAllPeopleAsync()
         {
             return await _context.People
-                .Where(s=>s.IsDeleted)
+          
                 .ToListAsync();
         }
 
@@ -34,7 +34,7 @@ namespace BackEnd.Repositories
         {
             var person = await _context.People
                 .Include(p => p.IdentificationType)
-                .FirstOrDefaultAsync(p => p.IdPeople == id);
+                .FirstOrDefaultAsync(p => p.Id == id);
 
             if (person == null)
             {
@@ -52,7 +52,7 @@ namespace BackEnd.Repositories
 
         public async Task UpdatePeopleAsync(People people)
         {
-            var existingPerson = await _context.People.FindAsync(people.IdPeople);
+            var existingPerson = await _context.People.FindAsync(people.Id);
 
             if (existingPerson != null)
             {
@@ -70,7 +70,7 @@ namespace BackEnd.Repositories
             }
             else
             {
-                throw new KeyNotFoundException($"Person with ID {people.IdPeople} not found.");
+                throw new KeyNotFoundException($"Person with ID {people.Id} not found.");
             }
         }
 
