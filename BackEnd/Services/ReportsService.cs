@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace BackEnd.Services
 {
-    public interface IReportsService
-    {
-        Task<IEnumerable<Reports>> GetAllReportsAsync();
-        Task<Reports> GetReportByIdAsync(int id);
-        Task CreateReportAsync(Reports report);
-        Task UpdateReportAsync(Reports report);
-        Task DeleteReportAsync(int id);
-    }
+    //public interface IReportsService
+    //{
+    //    Task<IEnumerable<Reports>> GetAllReportsAsync();
+    //    Task<Reports> GetReportByIdAsync(int id);
+    //    Task CreateReportAsync(Reports report);
+    //    Task UpdateReportAsync(Reports report);
+    //    Task DeleteReportAsync(int id);
+    //}
 
-    public class ReportsService : IReportsService
+    public class ReportsService 
     {
-        private readonly IReportsRepository _reportsRepository;
+        private readonly ReportsRepository _reportsRepository;
 
-        public ReportsService(IReportsRepository reportsRepository)
+        public ReportsService(ReportsRepository reportsRepository)
         {
             _reportsRepository = reportsRepository;
         }

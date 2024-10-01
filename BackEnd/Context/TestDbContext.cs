@@ -24,7 +24,7 @@ namespace BackEnd.Context
         public DbSet<Loans> Loans { get; set; }
         public DbSet<Reports> Reports { get; set; }
         public DbSet<Formats> Formats { get; set; }
-        public DbSet<AuthorsXBooks>authorsXBooks { get; set; }
+       // public DbSet<AuthorsXBooks>authorsXBooks { get; set; }
         public DbSet<BooksXEditorials> BooksXEditorials { get; set; }
         public DbSet<BooksXFormats> BooksXFormats { get; set; }
         public DbSet<BooksXLoans> BooksXLoans { get; set; }
@@ -35,8 +35,15 @@ namespace BackEnd.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configuración de la entidad User
-            modelBuilder.Entity<User>()
+            //modelBuilder.Entity<People>()
+            //    .HasDiscriminator<string>("Discriminator")
+            //    .HasValue<Authors>("Authors");
+                
+
+
+
+        // Configuración de la entidad User
+        modelBuilder.Entity<User>()
                 .HasKey(u => u.Id);
 
             // Configuración de la relación entre User y People
@@ -49,31 +56,10 @@ namespace BackEnd.Context
             modelBuilder.Entity<People>()
                 .ToTable("People"); // Especifica la tabla para People
 
-            modelBuilder.Entity<Authors>()
-                .HasKey(u => u.Id);
+            
 
-            // Configuración de la relación entre User y People
-            modelBuilder.Entity<Authors>()
-                .HasOne<People>()
-                .WithMany()
-                .HasForeignKey(u => u.IdPersona); // Relaciona IdPersona de User con Id de People
 
-            // Configuración de la entidad People
-            modelBuilder.Entity<People>()
-                .ToTable("People"); // Especifica la tabla para People
-
-            modelBuilder.Entity<AuthorsXBooks>()
-       .HasKey(ba => new { ba.BooksId, ba.AuthorsId }); // Configura la clave primaria
-
-            modelBuilder.Entity<AuthorsXBooks>()
-                .HasOne(ba => ba.Books)
-                .WithMany() // Cambia esto si tienes una relación inversa
-                .HasForeignKey(ba => ba.BooksId);
-
-            modelBuilder.Entity<AuthorsXBooks>()
-                .HasOne(ba => ba.Authors)
-                .WithMany() // Cambia esto si tienes una relación inversa
-                .HasForeignKey(ba => ba.AuthorsId);
+            
             modelBuilder.Entity<BooksXTopics>()
              .HasNoKey();
             modelBuilder.Entity<BooksXLoans>()

@@ -5,7 +5,7 @@
 namespace BackEnd.Migrations
 {
     /// <inheritdoc />
-    public partial class AddUsernameToUsers : Migration
+    public partial class AddUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

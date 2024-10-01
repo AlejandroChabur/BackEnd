@@ -10,9 +10,9 @@ namespace BackEnd.Controllers
     [Route("api/[controller]")]
     public class UserTypeController : ControllerBase
     {
-        private readonly IUserTypeService _userTypeService;
+        private readonly UserTypeService _userTypeService;
 
-        public UserTypeController(IUserTypeService userTypeService)
+        public UserTypeController(UserTypeService userTypeService)
         {
             _userTypeService = userTypeService;
         }

@@ -7,8 +7,6 @@ using System.Threading.Tasks;
 
 namespace BackEnd.Repositories
 {
-  
-    
     public class AuthorsRepository
     {
         private readonly TestDbContext _context;

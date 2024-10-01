@@ -4,7 +4,7 @@ namespace BackEnd.Model
 {
     public class People
     {
-       // internal readonly bool IsDeleted;
+
 
         [Key]
         public int Id { get; set; }

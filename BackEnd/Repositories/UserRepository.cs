@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace BackEnd.Repositories
 {
-    public interface IUserRepository
-    {
-        Task<IEnumerable<User>> GetAllUsersAsync();
-        Task<User> GetUserByIdAsync(int id);
-        Task CreateUserAsync(User user);
-        Task UpdateUserAsync(User user);
-        Task DeleteUserAsync(int id);
-    }
-    public class UserRepository : IUserRepository
+    //public interface IUserRepository
+    //{
+    //    Task<IEnumerable<User>> GetAllUsersAsync();
+    //    Task<User> GetUserByIdAsync(int id);
+    //    Task CreateUserAsync(User user);
+    //    Task UpdateUserAsync(User user);
+    //    Task DeleteUserAsync(int id);
+    //}
+    public class UserRepository
     {
         private readonly TestDbContext _context;
 
@@ -26,16 +26,16 @@ namespace BackEnd.Repositories
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
             return await _context.Users
-                .Where(s => s.IsDeleted)
-                .Include(u => u.UserType) // Incluye UserType si es necesario
+                
+                
                 .ToListAsync();
         }
 
         public async Task<User> GetUserByIdAsync(int id)
         {
             var user = await _context.Users
-                .Where(s => s.IsDeleted)
-                .Include(u => u.UserType) // Incluye UserType si es necesario
+                
+               
                 .FirstOrDefaultAsync(u => u.Id == id);
 
             if (user == null)
@@ -63,7 +63,7 @@ namespace BackEnd.Repositories
                 existingUser.Password = user.Password;
                 existingUser.PhoneNumber = user.PhoneNumber;
                 existingUser.IdPersona = user.IdPersona;
-                existingUser.UserType = user.UserType;
+               // existingUser.UserType = user.UserType;
 
                 await _context.SaveChangesAsync();
             }

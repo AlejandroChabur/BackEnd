@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace BackEnd.Repositories
 {
-    public interface IReportsRepository
-    {
-        Task<IEnumerable<Reports>> GetAllReportsAsync();
-        Task<Reports> GetReportByIdAsync(int id);
-        Task CreateReportAsync(Reports report);
-        Task UpdateReportAsync(Reports report);
-        Task DeleteReportAsync(int id);
-    }
-    public class ReportsRepository : IReportsRepository
+    //public interface IReportsRepository
+    //{
+    //    Task<IEnumerable<Reports>> GetAllReportsAsync();
+    //    Task<Reports> GetReportByIdAsync(int id);
+    //    Task CreateReportAsync(Reports report);
+    //    Task UpdateReportAsync(Reports report);
+    //    Task DeleteReportAsync(int id);
+    //}
+    public class ReportsRepository
     {
         private readonly TestDbContext _context;
 
@@ -26,7 +26,7 @@ namespace BackEnd.Repositories
         public async Task<IEnumerable<Reports>> GetAllReportsAsync()
         {
             return await _context.Reports
-              .Where(s => s.IsDeleted)
+              
                 .ToListAsync();
         }
 
