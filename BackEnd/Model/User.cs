@@ -11,6 +11,7 @@ namespace BackEnd.Model
         public required string Email { get; set; }
         public required string Password { get; set; }
         public required string PhoneNumber { get; set; }
+        public required string UserCode { get; set; }
 
         public virtual required UserType UserType { get; set; }
         public bool IsDeleted { get; internal set; }

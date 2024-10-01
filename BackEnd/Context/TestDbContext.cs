@@ -1,4 +1,6 @@
-﻿using BackEnd.Model;
+﻿
+
+using BackEnd.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd.Context
@@ -12,17 +14,22 @@ namespace BackEnd.Context
         public DbSet<User> Users { get; set; }
         public DbSet<UserType> UserType { get; set; }
        
-        public DbSet<IdentificationType> identificationTypes { get; set; }
-        public DbSet<People> people { get; set; }
-        public DbSet<Authors> authors { get; set; }
-        public object Authors { get; internal set; }
+        public DbSet<IdentificationType> IdentificationTypes { get; set; }
+        public DbSet<People> People { get; set; }
+        public DbSet<Authors> Authors { get; set; }
         public DbSet<Books> Books { get; set; }
-        public DbSet<Edition> editions { get; set; }
-        public DbSet<Topics> topics { get; set; }
-        public DbSet<Editorials> editorials { get; set; }
-        public DbSet<Loans> loans { get; set; }
-        public DbSet<Reports> reports { get; set; }
-        public DbSet<Formats> formats { get; set; }
+        public DbSet<Edition> Editions { get; set; }
+        public DbSet<Topics> Topics { get; set; }
+        public DbSet<Editorials> Editorials { get; set; }
+        public DbSet<Loans> Loans { get; set; }
+        public DbSet<Reports> Reports { get; set; }
+        public DbSet<Formats> Formats { get; set; }
+        public DbSet<AuthorsXBooks>authorsXBooks { get; set; }
+        public DbSet<BooksXEditorials> BooksXEditorials { get; set; }
+        public DbSet<BooksXFormats> BooksXFormats { get; set; }
+        public DbSet<BooksXLoans> BooksXLoans { get; set; }
+        public DbSet<BooksXTopics> BooksXTopics { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -42,17 +49,47 @@ namespace BackEnd.Context
             modelBuilder.Entity<People>()
                 .ToTable("People"); // Especifica la tabla para People
 
-            // Configuración de la herencia entre People y Authors
             modelBuilder.Entity<Authors>()
-                .ToTable("Authors") // Especifica la tabla para Authors
-                .HasBaseType<People>(); // Establece que Authors hereda de People
+                .HasKey(u => u.Id);
 
-            // Configuración adicional para Authors
+            // Configuración de la relación entre User y People
             modelBuilder.Entity<Authors>()
-                .Property(a => a.Country)
-                .IsRequired(); // Especifica que el campo Country es requerido
+                .HasOne<People>()
+                .WithMany()
+                .HasForeignKey(u => u.IdPersona); // Relaciona IdPersona de User con Id de People
+
+            // Configuración de la entidad People
+            modelBuilder.Entity<People>()
+                .ToTable("People"); // Especifica la tabla para People
+
+            modelBuilder.Entity<AuthorsXBooks>()
+       .HasKey(ba => new { ba.BooksId, ba.AuthorsId }); // Configura la clave primaria
+
+            modelBuilder.Entity<AuthorsXBooks>()
+                .HasOne(ba => ba.Books)
+                .WithMany() // Cambia esto si tienes una relación inversa
+                .HasForeignKey(ba => ba.BooksId);
+
+            modelBuilder.Entity<AuthorsXBooks>()
+                .HasOne(ba => ba.Authors)
+                .WithMany() // Cambia esto si tienes una relación inversa
+                .HasForeignKey(ba => ba.AuthorsId);
+            modelBuilder.Entity<BooksXTopics>()
+             .HasNoKey();
+            modelBuilder.Entity<BooksXLoans>()
+             .HasNoKey();
+            modelBuilder.Entity<BooksXFormats>()
+             .HasNoKey();
+            modelBuilder.Entity<BooksXEditorials>()
+             .HasNoKey();
+            
+
+
+
+
+
         }
 
-       
+
     }
 }

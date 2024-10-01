@@ -1,18 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace BackEnd.Migrations
 {
-    public partial class AddLoans : Migration
+    /// <inheritdoc />
+    public partial class CreateLoansTable : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Loans",
+                name: "loans",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    IdLoans = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     LoanDate = table.Column<DateOnly>(type: "date", nullable: false),
@@ -20,26 +23,27 @@ namespace BackEnd.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Loans", x => x.Id);
+                    table.PrimaryKey("PK_loans", x => x.IdLoans);
                     table.ForeignKey(
-                        name: "FK_Loans_Users_UserId",
+                        name: "FK_loans_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            // Puedes agregar índices si lo deseas
             migrationBuilder.CreateIndex(
-                name: "IX_Loans_UserId",
-                table: "Loans",
+                name: "IX_loans_UserId",
+                table: "loans",
                 column: "UserId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Loans");
+                name: "loans");
         }
     }
 }
+
