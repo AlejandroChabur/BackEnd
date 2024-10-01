@@ -49,7 +49,7 @@ namespace BackEnd.Controllers
             }
 
             await _topicsService.CreateTopicAsync(topic);
-            return CreatedAtAction(nameof(GetTopicById), new { id = topic.IdTopic }, topic);
+            return CreatedAtAction(nameof(GetTopicById), new { id = topic.Id }, topic);
         }
 
         [HttpPut("{id}")]
@@ -57,7 +57,7 @@ namespace BackEnd.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateTopic(int id, [FromBody] Topics topic)
         {
-            if (id != topic.IdTopic)
+            if (id != topic.Id)
             {
                 return BadRequest();
             }

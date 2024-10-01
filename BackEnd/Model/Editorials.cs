@@ -1,11 +1,14 @@
-﻿namespace BackEnd.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BackEnd.Model
 {
     public class Editorials
 
     {
-        public int IdEditorials{ get; set; }
+        [Key]
+        public int Id { get; set; }
         public string EditorialsName { get; set; }
-        public ICollection<BooksXEditorials> BooksXEditorials { get; set; }
+      
 
     }
 }

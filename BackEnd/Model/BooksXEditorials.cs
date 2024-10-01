@@ -2,11 +2,8 @@
 {
     public class BooksXEditorials
     {
-        public int BookId { get; set; }
-        public Books Books { get; set; }
-
-        public int IdEditorials { get; set; }
-        public Editorials Editorials { get; set; }
+        public virtual required Books Books { get; set; }
+        public virtual required Editorials Editorials { get; set; }
 
     }
 }

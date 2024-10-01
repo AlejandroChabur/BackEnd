@@ -22,6 +22,38 @@ builder.Services.AddScoped<IAuthorsServices, AuthorsServices>();
 builder.Services.AddScoped<EditionRepository, EditionRepository>();
 builder.Services.AddScoped<EditionService, EditionService>();
 
+builder.Services.AddScoped<EditorialsRepository, EditorialsRepository>();
+builder.Services.AddScoped<EditorialsService, EditorialsService>();
+
+builder.Services.AddScoped<FormatsRepository, FormatsRepository>();
+builder.Services.AddScoped<FormatsService, FormatsService > ();
+
+builder.Services.AddScoped<IdentificationTypeRepository, IdentificationTypeRepository>();
+builder.Services.AddScoped<IdentificationTypeService, IdentificationTypeService>();
+
+builder.Services.AddScoped<LoansRepository, LoansRepository>();
+builder.Services.AddScoped<LoansService, LoansService>();
+
+builder.Services.AddScoped<IPeopleRepository, PeopleRepository>();
+builder.Services.AddScoped<PeopleService, PeopleService>();
+
+builder.Services.AddScoped<IReportsRepository, ReportsRepository>();
+builder.Services.AddScoped<ReportsService, ReportsService>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<UserService, UserService>();
+
+builder.Services.AddScoped<ITopicsRepository, TopicsRepository>();
+builder.Services.AddScoped<TopicsService, TopicsService>();
+
+
+builder.Services.AddScoped<IUserTypeRepository, UserTypeRepository>();
+builder.Services.AddScoped<UserTypeService, UserTypeService>();
+
+
+
+
+
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

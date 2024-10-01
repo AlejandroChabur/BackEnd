@@ -50,7 +50,7 @@ namespace BackEnd.Controllers
 
             await _peopleService.CreatePeopleAsync(people);
 
-            return CreatedAtAction(nameof(GetPersonById), new { id = people.IdPeople }, people);
+            return CreatedAtAction(nameof(GetPersonById), new { id = people.Id }, people);
         }
 
         [HttpPut("{id}")]
@@ -58,7 +58,7 @@ namespace BackEnd.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdatePerson(int id, [FromBody] People people)
         {
-            if (id != people.IdPeople)
+            if (id != people.Id)
             {
                 return BadRequest();
             }

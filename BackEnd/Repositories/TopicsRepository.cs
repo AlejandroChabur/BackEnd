@@ -26,7 +26,7 @@ namespace BackEnd.Repositories
         public async Task<IEnumerable<Topics>> GetAllTopicsAsync()
         {
             return await _context.Topics
-                .Include(t => t.BooksXTopics)
+                //.Include(t => t.BooksXTopics)
                 .Where(s => s.IsDeleted)
                 .ToListAsync();
         }
@@ -35,8 +35,8 @@ namespace BackEnd.Repositories
         {
             var topic = await _context.Topics
                 .Where(s => s.IsDeleted)
-                .Include(t => t.BooksXTopics)
-                .FirstOrDefaultAsync(t => t.IdTopic == id);
+                //.Include(t => t.BooksXTopics)
+                .FirstOrDefaultAsync(t => t.Id == id);
 
             if (topic == null)
             {
@@ -54,7 +54,7 @@ namespace BackEnd.Repositories
 
         public async Task UpdateTopicAsync(Topics topic)
         {
-            var existingTopic = await _context.Topics.FindAsync(topic.IdTopic);
+            var existingTopic = await _context.Topics.FindAsync(topic.Id);
 
             if (existingTopic != null)
             {
@@ -64,7 +64,7 @@ namespace BackEnd.Repositories
             }
             else
             {
-                throw new KeyNotFoundException($"Topic with ID {topic.IdTopic} not found.");
+                throw new KeyNotFoundException($"Topic with ID {topic.Id} not found.");
             }
         }
 

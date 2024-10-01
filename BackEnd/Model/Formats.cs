@@ -1,9 +1,12 @@
-﻿namespace BackEnd.Model
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BackEnd.Model
 {
     public class Formats
     {
-        public int IdFormats { get; set; }
-        public string FormatName { get; set; }
-        public ICollection<BooksXFormats> BooksXFormats { get; set; }
+        [Key]
+        public int Id { get; set; }
+        public required string FormatName { get; set; }
+        //public required ICollection<BooksXFormats> BooksXFormats { get; set; }
     }
 }
