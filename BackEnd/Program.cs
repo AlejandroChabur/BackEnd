@@ -34,20 +34,20 @@ builder.Services.AddScoped<IdentificationTypeService, IdentificationTypeService>
 builder.Services.AddScoped<LoansRepository, LoansRepository>();
 builder.Services.AddScoped<LoansService, LoansService>();
 
-builder.Services.AddScoped<IPeopleRepository, PeopleRepository>();
+builder.Services.AddScoped<PeopleRepository, PeopleRepository>();
 builder.Services.AddScoped<PeopleService, PeopleService>();
 
-builder.Services.AddScoped<IReportsRepository, ReportsRepository>();
+builder.Services.AddScoped<ReportsRepository, ReportsRepository>();
 builder.Services.AddScoped<ReportsService, ReportsService>();
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<UserRepository, UserRepository>();
 builder.Services.AddScoped<UserService, UserService>();
 
-builder.Services.AddScoped<ITopicsRepository, TopicsRepository>();
+builder.Services.AddScoped<TopicsRepository, TopicsRepository>();
 builder.Services.AddScoped<TopicsService, TopicsService>();
 
 
-builder.Services.AddScoped<IUserTypeRepository, UserTypeRepository>();
+builder.Services.AddScoped<UserTypeRepository, UserTypeRepository>();
 builder.Services.AddScoped<UserTypeService, UserTypeService>();
 
 

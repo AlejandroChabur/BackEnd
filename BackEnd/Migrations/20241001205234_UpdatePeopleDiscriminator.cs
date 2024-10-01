@@ -5,7 +5,7 @@
 namespace BackEnd.Migrations
 {
     /// <inheritdoc />
-    public partial class AddAuthors : Migration
+    public partial class UpdatePeopleDiscriminator : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

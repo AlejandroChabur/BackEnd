@@ -10,9 +10,9 @@ namespace BackEnd.Controllers
     [Route("api/[controller]")]
     public class TopicsController : ControllerBase
     {
-        private readonly ITopicsService _topicsService;
+        private readonly TopicsService _topicsService;
 
-        public TopicsController(ITopicsService topicsService)
+        public TopicsController(TopicsService topicsService)
         {
             _topicsService = topicsService;
         }

@@ -10,9 +10,9 @@ namespace BackEnd.Controllers
     [Route("api/[controller]")]
     public class PeopleController : ControllerBase
     {
-        private readonly IPeopleService _peopleService;
+        private readonly PeopleService _peopleService;
 
-        public PeopleController(IPeopleService peopleService)
+        public PeopleController(PeopleService peopleService)
         {
             _peopleService = peopleService;
         }

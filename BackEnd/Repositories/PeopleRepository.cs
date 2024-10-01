@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 
 namespace BackEnd.Repositories
 {
-    public interface IPeopleRepository
-    {
-        Task<IEnumerable<People>> GetAllPeopleAsync();
-        Task<People> GetPeopleByIdAsync(int id);
-        Task CreatePeopleAsync(People people);
-        Task UpdatePeopleAsync(People people);
-        Task DeletePeopleAsync(int id);
-    }
-    public class PeopleRepository : IPeopleRepository
+    //public interface IPeopleRepository
+    //{
+        
+    //    Task<People> GetPeopleByIdAsync(int id);
+    //    Task<IEnumerable<People>> GetAllPeopleAsync();
+    //    Task CreatePeopleAsync(People people);
+    //    Task UpdatePeopleAsync(People people);
+    //    Task DeletePeopleAsync(int id);
+    //}
+    public class PeopleRepository 
     {
         private readonly TestDbContext _context;
 

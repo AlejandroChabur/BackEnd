@@ -10,9 +10,9 @@ namespace BackEnd.Controllers
     [Route("api/[controller]")]
     public class ReportsController : ControllerBase
     {
-        private readonly IReportsService _reportsService;
+        private readonly ReportsService _reportsService;
 
-        public ReportsController(IReportsService reportsService)
+        public ReportsController(ReportsService reportsService)
         {
             _reportsService = reportsService;
         }

@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace BackEnd.Repositories
 {
-    public interface IUserTypeRepository
-    {
-        Task<IEnumerable<UserType>> GetAllUserTypesAsync();
-        Task<UserType> GetUserTypeByIdAsync(int id);
-        Task CreateUserTypeAsync(UserType UserType);
-        Task UpdateUserTypeAsync(UserType UserType);
-        Task DeleteUserTypeAsync(int id);
-    }
+    //public interface IUserTypeRepository
+    //{
+    //    Task<IEnumerable<UserType>> GetAllUserTypesAsync();
+    //    Task<UserType> GetUserTypeByIdAsync(int id);
+    //    Task CreateUserTypeAsync(UserType UserType);
+    //    Task UpdateUserTypeAsync(UserType UserType);
+    //    Task DeleteUserTypeAsync(int id);
+    //}
 
-    public class UserTypeRepository : IUserTypeRepository
+    public class UserTypeRepository 
     {
         private readonly TestDbContext _context;
 
@@ -72,7 +72,7 @@ namespace BackEnd.Repositories
             var userType = await _context.UserType.FindAsync(id);
             if (userType != null)
             {
-                userType.IsDeleted = true; // Marcar como eliminado
+               
                 await _context.SaveChangesAsync();
             }
             else
