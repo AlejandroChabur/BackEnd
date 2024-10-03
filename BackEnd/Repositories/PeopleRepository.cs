@@ -27,14 +27,14 @@ namespace BackEnd.Repositories
         public async Task<IEnumerable<People>> GetAllPeopleAsync()
         {
             return await _context.People
-          
+                .Include(a=> a.IdentificationTypes)
                 .ToListAsync();
         }
 
         public async Task<People> GetPeopleByIdAsync(int id)
         {
             var person = await _context.People
-                .Include(p => p.IdentificationType)
+                .Include(a => a.IdentificationTypes)
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             if (person == null)
@@ -46,8 +46,21 @@ namespace BackEnd.Repositories
         }
 
         public async Task CreatePeopleAsync(People people)
-        {
-            await _context.People.AddAsync(people);
+        { // Busca el tipo de identificación existente
+            var identificationType = await _context.IdentificationTypes
+                .FindAsync(people.IdIdentificationType); // Asegúrate de que estás usando el ID correcto
+
+            if (identificationType == null)
+            {
+                // Si no existe, puedes lanzar una excepción o manejarlo de otra manera
+                throw new Exception("Tipo de identificación no encontrado");
+            }
+
+            // Asigna el tipo de identificación encontrado al nuevo registro de People
+            people.IdentificationTypes = identificationType;
+
+            // Ahora agrega el nuevo registro de People
+            _context.People.Add(people);
             await _context.SaveChangesAsync();
         }
 
@@ -58,7 +71,7 @@ namespace BackEnd.Repositories
             if (existingPerson != null)
             {
                 // Solo actualiza las propiedades necesarias
-                existingPerson.IdentificationType = people.IdentificationType;
+                existingPerson.IdIdentificationType = people.IdIdentificationType;
                 existingPerson.IdentificationNumber = people.IdentificationNumber;
                 existingPerson.FirstName = people.FirstName;
                 existingPerson.MiddleName = people.MiddleName;

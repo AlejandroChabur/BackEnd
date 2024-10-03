@@ -1,9 +1,8 @@
 ﻿using BackEnd.Model;
 using Microsoft.AspNetCore.Mvc;
-using BackEnd.Context;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using BackEnd.Services;
 
 namespace BackEnd.Controllers
 {
@@ -11,11 +10,12 @@ namespace BackEnd.Controllers
     [Route("api/[controller]")]
     public class AuthorsController : ControllerBase
     {
-        private readonly TestDbContext _context;
+        private readonly AuthorsServices _authorsService;
 
-        public AuthorsController(TestDbContext context)
+        // Constructor para inyectar el servicio de autores
+        public AuthorsController(AuthorsServices authorsService)
         {
-            _context = context;
+            _authorsService = authorsService;
         }
 
         // Obtener todos los autores
@@ -23,7 +23,7 @@ namespace BackEnd.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Authors>>> GetAllAuthors()
         {
-            var authors = await _context.Authors.ToListAsync();
+            var authors = await _authorsService.GetAllAuthorsAsync();
             return Ok(authors);
         }
 
@@ -31,9 +31,9 @@ namespace BackEnd.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<Authors>> GetAuthorByIdAsync(int id)
+        public async Task<ActionResult<Authors>> GetAuthorById(int id)
         {
-            var author = await _context.Authors.FirstOrDefaultAsync(a => a.Id == id);
+            var author = await _authorsService.GetAuthorByIdAsync(id);
 
             if (author == null)
             {
@@ -54,13 +54,12 @@ namespace BackEnd.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Authors.Add(author);
-            await _context.SaveChangesAsync();
+            await _authorsService.CreateAuthorAsync(author);
 
-            return CreatedAtAction(nameof(GetAuthorByIdAsync), new { id = author.Id }, author);
+            return CreatedAtAction(nameof(GetAuthorById), new { id = author.Id }, author);
         }
 
-        // Actualizar un autor
+        // Actualizar un autor existente
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -72,35 +71,33 @@ namespace BackEnd.Controllers
                 return BadRequest();
             }
 
-            var existingAuthor = await _context.Authors.FirstOrDefaultAsync(a => a.Id == id);
+            var existingAuthor = await _authorsService.GetAuthorByIdAsync(id);
             if (existingAuthor == null)
             {
                 return NotFound();
             }
 
+            // Actualiza los campos necesarios en el autor
             existingAuthor.Country = author.Country;
-            // Actualiza otros campos si es necesario.
+            // Otros campos pueden actualizarse aquí.
 
-            await _context.SaveChangesAsync();
-
+            await _authorsService.UpdateAuthorAsync(existingAuthor);
             return NoContent();
         }
 
-        // Eliminar un autor
+        // Eliminar un autor por su ID
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteAuthor(int id)
         {
-            var author = await _context.Authors.FirstOrDefaultAsync(a => a.Id == id);
-            if (author == null)
+            var existingAuthor = await _authorsService.GetAuthorByIdAsync(id);
+            if (existingAuthor == null)
             {
                 return NotFound();
             }
 
-            _context.Authors.Remove(author);
-            await _context.SaveChangesAsync();
-
+            await _authorsService.DeleteAuthorAsync(id);
             return NoContent();
         }
     }
