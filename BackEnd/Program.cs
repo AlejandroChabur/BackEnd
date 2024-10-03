@@ -16,7 +16,7 @@ builder.Services.AddScoped<IBooksServices, BooksServices>();
 
 // Agregar repositorios y servicios para Authors
 builder.Services.AddScoped<AuthorsRepository, AuthorsRepository>();
-builder.Services.AddScoped<IAuthorsServices, AuthorsServices>();
+builder.Services.AddScoped<AuthorsServices, AuthorsServices>();
 
 // Agregar repositorios y servicios para Edition
 builder.Services.AddScoped<EditionRepository, EditionRepository>();

@@ -7,13 +7,15 @@ namespace BackEnd.Model
         [Key]
         
         public int Id { get; set; }  // Cambié BookId a Id para consistencia
-        public int EditionId { get; set; }
-        public virtual required Edition Edition { get; set; }
+        public int IdEdition { get; set; }
+       
 
         public required string Title { get; set; }
         public required string Code { get; set; }
 
         public DateOnly PublicationYear {  get; set; }
+
+        public Edition Edition { get; set; }
 
        
     }

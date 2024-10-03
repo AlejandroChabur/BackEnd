@@ -7,9 +7,9 @@ namespace BackEnd.Model
         {
         public int Id { get; set; }
         
-        
+        public int IdPerson{ get; set; }
 
         public required string Country { get; set; }
-        
+        public People Person { get; set; }
     } 
 }

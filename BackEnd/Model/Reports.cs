@@ -7,8 +7,10 @@ namespace BackEnd.Model
         [Key]
         public int Id { get; set; }
 
-        public virtual required Loans Loans { get; set; }
+       public int IdLoan { get; set; }
         public string Comment { get; set; }
+
+        public Loans Loans { get; set; }    
      
     }
 }

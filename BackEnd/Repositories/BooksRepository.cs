@@ -25,13 +25,14 @@ namespace BackEnd.Repositories
         public async Task<IEnumerable<Books>> GetAllBooksAsync()
         {
             return await _context.Books
-                .Include(b => b.Edition)
+                .Include(a => a.Edition)
                 .ToListAsync();
         }
 
         public async Task<Books> GetBooksByIdAsync(int id)
         {
             var book = await _context.Books
+                 .Include(a => a.Edition)
                 .FirstOrDefaultAsync(b => b.Id == id);
 
             if (book == null)
@@ -55,16 +56,22 @@ namespace BackEnd.Repositories
 
         public async Task CreateBooksAsync(Books book)
         {
-            try
+            // Busca la edición existente
+            var edition = await _context.Editions
+                .FindAsync(book.IdEdition); // Asegúrate de que estás usando el ID correcto
+
+            if (edition == null)
             {
-                await _context.Books.AddAsync(book);
-                await _context.SaveChangesAsync();
+                // Si no existe, puedes lanzar una excepción o manejarlo de otra manera
+                throw new Exception("Edición no encontrada");
             }
-            catch (Exception e)
-            {
-                Console.WriteLine($"Error al crear el libro: {e.Message}");
-                throw; // Vuelve a lanzar la excepción después de registrar el error
-            }
+
+            // Asigna la edición encontrada al nuevo registro de Books
+            book.Edition = edition;
+
+            // Ahora agrega el nuevo registro de Books
+            _context.Books.Add(book);
+            await _context.SaveChangesAsync();
         }
 
 
@@ -76,7 +83,7 @@ namespace BackEnd.Repositories
             if (existingBook != null)
             {
                 // Solo actualiza las propiedades necesarias
-                existingBook.EditionId = book.EditionId;
+                existingBook.IdEdition = book.IdEdition;
                 existingBook.Title = book.Title;
                 existingBook.Code = book.Code;
                 existingBook.PublicationYear = book.PublicationYear;
