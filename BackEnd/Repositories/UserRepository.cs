@@ -28,6 +28,7 @@ namespace BackEnd.Repositories
             return await _context.Users
                 
                 .Include(a=>a.Peoples)
+                .Include(a=>a.UserTypes)
                 .ToListAsync();
         }
 
@@ -36,6 +37,7 @@ namespace BackEnd.Repositories
             var user = await _context.Users
 
                .Include(a => a.Peoples)
+               .Include(a => a.UserTypes)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
             if (user == null)
