@@ -6,8 +6,10 @@ namespace BackEnd.Model
         public class Authors
         {
         public int Id { get; set; }
-        public int IdPersona { get; set; }
+        
+        public int IdPerson{ get; set; }
+
         public required string Country { get; set; }
-        public bool IsDeleted { get; internal set; }
+        public People Person { get; set; }
     } 
 }

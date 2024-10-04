@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace BackEnd.Services
 {
-    public interface IUserTypeService
-    {
-        Task<IEnumerable<UserType>> GetAllUserTypesAsync();
-        Task<UserType> GetUserTypeByIdAsync(int id);
-        Task CreateUserTypeAsync(UserType userType);
-        Task UpdateUserTypeAsync(UserType userType);
-        Task DeleteUserTypeAsync(int id);
-    }
+    //public interface IUserTypeService
+    //{
+    //    Task<IEnumerable<UserType>> GetAllUserTypesAsync();
+    //    Task<UserType> GetUserTypeByIdAsync(int id);
+    //    Task CreateUserTypeAsync(UserType userType);
+    //    Task UpdateUserTypeAsync(UserType userType);
+    //    Task DeleteUserTypeAsync(int id);
+    //}
 
-    public class UserTypeService : IUserTypeService
+    public class UserTypeService
     {
-        private readonly IUserTypeRepository _userTypeRepository;
+        private readonly UserTypeRepository _userTypeRepository;
 
-        public UserTypeService(IUserTypeRepository userTypeRepository)
+        public UserTypeService(UserTypeRepository userTypeRepository)
         {
             _userTypeRepository = userTypeRepository;
         }

@@ -14,11 +14,11 @@ namespace BackEnd.Services
         Task DeleteTopicAsync(int id);
     }
 
-    public class TopicsService : ITopicsService
+    public class TopicsService
     {
-        private readonly ITopicsRepository _topicsRepository;
+        private readonly TopicsRepository _topicsRepository;
 
-        public TopicsService(ITopicsRepository topicsRepository)
+        public TopicsService(TopicsRepository topicsRepository)
         {
             _topicsRepository = topicsRepository;
         }

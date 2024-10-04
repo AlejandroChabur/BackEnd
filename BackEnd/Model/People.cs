@@ -4,11 +4,12 @@ namespace BackEnd.Model
 {
     public class People
     {
-       // internal readonly bool IsDeleted;
+
 
         [Key]
         public int Id { get; set; }
-        public virtual required IdentificationType IdentificationType { get; set; }
+        public int IdIdentificationType { get; set; }
+       
         public required string IdentificationNumber { get; set; }
         public required string FirstName { get; set; }
         public required string MiddleName { get; set; }
@@ -17,5 +18,8 @@ namespace BackEnd.Model
         public required string Address { get; set; }
         public required DateOnly borndate { get; set; }
 
+        public IdentificationType IdentificationTypes { get; set; }
+
+       
     }
 }

@@ -1,24 +1,23 @@
 ﻿using BackEnd.Model;
+using BackEnd.Repository;
+using BackEnd.Context;
 using BackEnd.Repositories;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
 namespace BackEnd.Services
 {
-    public interface IPeopleService
-    {
-        Task<IEnumerable<People>> GetAllPeopleAsync();
-        Task<People> GetPeopleByIdAsync(int id);
-        Task CreatePeopleAsync(People people);
-        Task UpdatePeopleAsync(People people);
-        Task DeletePeopleAsync(int id);
-    }
+    //public interface IPeopleServices
+    //{
+    //    Task<IEnumerable<People>> GetAllPeopleAsync();
+    //    Task<People> GetPeopleByIdAsync(int id);
+    //    Task CreatePeopleAsync(People people);
+    //    Task UpdatePeopleAsync(People people);
+    //    Task DeletePeopleAsync(int id);
+    //}
 
-    public class PeopleService : IPeopleService
+    public class PeopleService
     {
-        private readonly IPeopleRepository _peopleRepository;
+        private readonly PeopleRepository _peopleRepository;
 
-        public PeopleService(IPeopleRepository peopleRepository)
+        public PeopleService(PeopleRepository peopleRepository)
         {
             _peopleRepository = peopleRepository;
         }

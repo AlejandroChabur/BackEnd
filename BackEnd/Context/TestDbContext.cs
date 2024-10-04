@@ -24,7 +24,7 @@ namespace BackEnd.Context
         public DbSet<Loans> Loans { get; set; }
         public DbSet<Reports> Reports { get; set; }
         public DbSet<Formats> Formats { get; set; }
-        public DbSet<AuthorsXBooks>authorsXBooks { get; set; }
+       // public DbSet<AuthorsXBooks>authorsXBooks { get; set; }
         public DbSet<BooksXEditorials> BooksXEditorials { get; set; }
         public DbSet<BooksXFormats> BooksXFormats { get; set; }
         public DbSet<BooksXLoans> BooksXLoans { get; set; }
@@ -35,45 +35,57 @@ namespace BackEnd.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configuración de la entidad User
             modelBuilder.Entity<User>()
-                .HasKey(u => u.Id);
+           .HasOne(a => a.Peoples) // Propiedad de navegación en Authors
+           .WithMany() // No necesitas una propiedad de navegación inversa en People si no la tienes
+           .HasForeignKey(a => a.IdPerson) // Clave foránea que apunta a Id en People
+           .OnDelete(DeleteBehavior.Restrict); // Comportamien
 
-            // Configuración de la relación entre User y People
+            //////////////////////
             modelBuilder.Entity<User>()
-                .HasOne<People>()
-                .WithMany()
-                .HasForeignKey(u => u.IdPersona); // Relaciona IdPersona de User con Id de People
+          .HasOne<UserType>(a => a.UserTypes) // Propiedad de navegación en Authors
+          .WithMany() // No necesitas una propiedad de navegación inversa en People si no la tienes
+          .HasForeignKey(a => a.IdUserType) // Clave foránea que apunta a Id en People
+          .OnDelete(DeleteBehavior.Restrict); // Comportamien
+            /////////////////
+             modelBuilder.Entity<Books>()
+          .HasOne<Edition>(a => a.Edition) // Propiedad de navegación en Authors
+          .WithMany() // No necesitas una propiedad de navegación inversa en People si no la tienes
+          .HasForeignKey(a => a.IdEdition) // Clave foránea que apunta a Id en People
+          .OnDelete(DeleteBehavior.Restrict); // Comportamien
 
-            // Configuración de la entidad People
-            modelBuilder.Entity<People>()
-                .ToTable("People"); // Especifica la tabla para People
+            ///////////////
+            modelBuilder.Entity<Loans>()
+           .HasOne<User>(a => a.User) // Propiedad de navegación en Authors
+           .WithMany() // No necesitas una propiedad de navegación inversa en People si no la tienes
+           .HasForeignKey(a => a.IdUser) // Clave foránea que apunta a Id en People
+           .OnDelete(DeleteBehavior.Restrict); // Comportamien>>>>>
+
+            modelBuilder.Entity<Reports>()
+         .HasOne<Loans>(a => a.Loans) // Propiedad de navegación en Authors
+         .WithMany() // No necesitas una propiedad de navegación inversa en People si no la tienes
+         .HasForeignKey(a => a.IdLoan) // Clave foránea que apunta a Id en People
+         .OnDelete(DeleteBehavior.Restrict); // Comportamien>>>>
+
+
+
+
 
             modelBuilder.Entity<Authors>()
-                .HasKey(u => u.Id);
+         .HasOne(a => a.Person) // Propiedad de navegación en Authors
+         .WithMany() // No necesitas una propiedad de navegación inversa en People si no la tienes
+         .HasForeignKey(a => a.IdPerson) // Clave foránea que apunta a Id en People
+         .OnDelete(DeleteBehavior.Restrict); // Comportamien
 
-            // Configuración de la relación entre User y People
-            modelBuilder.Entity<Authors>()
-                .HasOne<People>()
-                .WithMany()
-                .HasForeignKey(u => u.IdPersona); // Relaciona IdPersona de User con Id de People
-
-            // Configuración de la entidad People
             modelBuilder.Entity<People>()
-                .ToTable("People"); // Especifica la tabla para People
+   .HasOne<IdentificationType>(a => a.IdentificationTypes) // Asumiendo que tienes una propiedad Person en Authors
+   .WithMany() // Si People no tiene relación inversa, puedes dejarlo así
+   .HasForeignKey(a => a.IdIdentificationType) // Cambia IdPersona por el nombre de la clave foránea
+   .OnDelete(DeleteBehavior.Restrict); // Esto evitará ciclos o múltiples rutas en casca
 
-            modelBuilder.Entity<AuthorsXBooks>()
-       .HasKey(ba => new { ba.BooksId, ba.AuthorsId }); // Configura la clave primaria
 
-            modelBuilder.Entity<AuthorsXBooks>()
-                .HasOne(ba => ba.Books)
-                .WithMany() // Cambia esto si tienes una relación inversa
-                .HasForeignKey(ba => ba.BooksId);
-
-            modelBuilder.Entity<AuthorsXBooks>()
-                .HasOne(ba => ba.Authors)
-                .WithMany() // Cambia esto si tienes una relación inversa
-                .HasForeignKey(ba => ba.AuthorsId);
+            modelBuilder.Entity<BooksXAuthors>()
+            .HasNoKey();
             modelBuilder.Entity<BooksXTopics>()
              .HasNoKey();
             modelBuilder.Entity<BooksXLoans>()

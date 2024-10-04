@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace BackEnd.Repositories
 {
-    public interface ITopicsRepository
-    {
-        Task<IEnumerable<Topics>> GetAllTopicsAsync();
-        Task<Topics> GetTopicByIdAsync(int id);
-        Task CreateTopicAsync(Topics topic);
-        Task UpdateTopicAsync(Topics topic);
-        Task DeleteTopicAsync(int id);
-    }
-    public class TopicsRepository : ITopicsRepository
+    //public interface ITopicsRepository
+    //{
+    //    Task<IEnumerable<Topics>> GetAllTopicsAsync();
+    //    Task<Topics> GetTopicByIdAsync(int id);
+    //    Task CreateTopicAsync(Topics topic);
+    //    Task UpdateTopicAsync(Topics topic);
+    //    Task DeleteTopicAsync(int id);
+    //}
+    public class TopicsRepository 
     {
         private readonly TestDbContext _context;
 
@@ -27,14 +27,14 @@ namespace BackEnd.Repositories
         {
             return await _context.Topics
                 //.Include(t => t.BooksXTopics)
-                .Where(s => s.IsDeleted)
+                
                 .ToListAsync();
         }
 
         public async Task<Topics> GetTopicByIdAsync(int id)
         {
             var topic = await _context.Topics
-                .Where(s => s.IsDeleted)
+                
                 //.Include(t => t.BooksXTopics)
                 .FirstOrDefaultAsync(t => t.Id == id);
 

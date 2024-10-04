@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace BackEnd.Repositories
 {
-    public interface IUserRepository
-    {
-        Task<IEnumerable<User>> GetAllUsersAsync();
-        Task<User> GetUserByIdAsync(int id);
-        Task CreateUserAsync(User user);
-        Task UpdateUserAsync(User user);
-        Task DeleteUserAsync(int id);
-    }
-    public class UserRepository : IUserRepository
+    //public interface IUserRepository
+    //{
+    //    Task<IEnumerable<User>> GetAllUsersAsync();
+    //    Task<User> GetUserByIdAsync(int id);
+    //    Task CreateUserAsync(User user);
+    //    Task UpdateUserAsync(User user);
+    //    Task DeleteUserAsync(int id);
+    //}
+    public class UserRepository
     {
         private readonly TestDbContext _context;
 
@@ -26,16 +26,16 @@ namespace BackEnd.Repositories
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
             return await _context.Users
-                .Where(s => s.IsDeleted)
-                .Include(u => u.UserType) // Incluye UserType si es necesario
+                
+                .Include(a=>a.Peoples)
                 .ToListAsync();
         }
 
         public async Task<User> GetUserByIdAsync(int id)
         {
             var user = await _context.Users
-                .Where(s => s.IsDeleted)
-                .Include(u => u.UserType) // Incluye UserType si es necesario
+
+               .Include(a => a.Peoples)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
             if (user == null)
@@ -48,7 +48,32 @@ namespace BackEnd.Repositories
 
         public async Task CreateUserAsync(User user)
         {
-            await _context.Users.AddAsync(user);
+            var userType = await _context.UserType
+       .FindAsync(user.IdUserType); // Asegúrate de que estás usando el ID correcto
+
+            if (userType == null)
+            {
+                // Si no existe, puedes lanzar una excepción o manejarlo de otra manera
+                throw new Exception("Tipo de usuario no encontrado");
+            }
+
+            // Asigna el tipo de usuario encontrado al nuevo registro de User
+            user.UserTypes = userType;
+
+            // Busca la persona existente a la que se asignará el usuario
+            var person = await _context.People.FindAsync(user.IdPerson); // Asegúrate de que estás usando el ID correcto
+
+            if (person == null)
+            {
+                // Si no existe, puedes lanzar una excepción o manejarlo de otra manera
+                throw new Exception("Persona no encontrada");
+            }
+
+            // Asigna la persona encontrada al nuevo registro de User
+            user.Peoples = person;
+
+            // Ahora agrega el nuevo registro de User
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
         }
 
@@ -62,8 +87,8 @@ namespace BackEnd.Repositories
                 existingUser.Email = user.Email;
                 existingUser.Password = user.Password;
                 existingUser.PhoneNumber = user.PhoneNumber;
-                existingUser.IdPersona = user.IdPersona;
-                existingUser.UserType = user.UserType;
+                existingUser.IdPerson = user.IdPerson;
+                existingUser.IdUserType = user.IdUserType;
 
                 await _context.SaveChangesAsync();
             }
