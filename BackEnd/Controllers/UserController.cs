@@ -1,4 +1,5 @@
-﻿using BackEnd.Model;
+﻿using BackEnd.DTOs;
+using BackEnd.Model;
 using BackEnd.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -48,6 +49,7 @@ namespace BackEnd.Controllers
                 return BadRequest(ModelState);
             }
 
+
             await _userService.CreateUserAsync(user);
             return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
         }
@@ -85,6 +87,25 @@ namespace BackEnd.Controllers
 
             await _userService.DeleteUserAsync(id);
             return NoContent();
+        }
+        // contraseña usuario
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginDTO loginDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);  // Si los datos no son válidos
+            }
+
+            var user = await _userService.LoginAsync(loginDto.Email, loginDto.Password);
+
+            if (user == null)
+            {
+                return Unauthorized("Credenciales inválidas.");
+            }
+
+            // Aquí podrías generar un token JWT o similar, pero por ahora retornamos los datos del usuario
+            return Ok(new { message = "Inicio de sesión exitoso", userId = user.Id });
         }
     }
 }
