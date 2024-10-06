@@ -58,6 +58,7 @@ namespace BackEnd.Repositories
             {
                 throw new Exception("Persona no encontrada");
             }
+            user.IsDelete = false;
 
             // Asignar la persona encontrada
             user.Peoples = person;
@@ -117,10 +118,21 @@ namespace BackEnd.Repositories
         // Obtener un usuario por su correo electrónico para el inicio de sesión
         public async Task<User> GetUserByEmailAsync(string email)
         {
-            return await _context.Users
+            var user = await _context.Users
                 .AsNoTracking()
+                .Include(u => u.UserTypes) // Incluir tipo de usuario si es necesario
+                .Include(u => u.Peoples)   // Incluir persona si es necesario
                 .FirstOrDefaultAsync(s => s.Email == email && !s.IsDelete);
+
+            // Manejo de errores: lanzar excepción si el usuario no se encuentra
+            if (user == null)
+            {
+                throw new KeyNotFoundException($"No se encontró un usuario con el correo: {email}");
+            }
+
+            return user;
         }
+
 
     }
 }
