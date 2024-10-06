@@ -49,6 +49,7 @@ namespace BackEnd.Controllers
                 return BadRequest(ModelState);
             }
 
+            user.IsDelete = false;
 
             await _userService.CreateUserAsync(user);
             return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
