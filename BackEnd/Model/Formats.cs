@@ -8,5 +8,8 @@ namespace BackEnd.Model
         public int Id { get; set; }
         public required string FormatName { get; set; }
         //public required ICollection<BooksXFormats> BooksXFormats { get; set; }
+        public bool IsDelete { get; set; } = false;  // Valor por defecto en falso
+
+
     }
 }

@@ -11,5 +11,10 @@ namespace BackEnd.Model
 
         public required string Country { get; set; }
         public People Person { get; set; }
-    } 
+
+        public bool IsDelete { get; set; } = false;  // Valor por defecto en falso
+
+
+
+    }
 }

@@ -21,7 +21,9 @@ namespace BackEnd.Repositories
             return await _context.Users
                 .Include(a => a.Peoples)
                 .Include(a => a.UserTypes)
+                .Where(a => !a.IsDelete)
                 .ToListAsync();
+
         }
 
         // Obtener un usuario por su ID
@@ -58,7 +60,7 @@ namespace BackEnd.Repositories
             {
                 throw new Exception("Persona no encontrada");
             }
-            user.IsDelete = false;
+            
 
             // Asignar la persona encontrada
             user.Peoples = person;
@@ -110,7 +112,7 @@ namespace BackEnd.Repositories
             var user = await _context.Users.FindAsync(id);
             if (user != null)
             {
-                _context.Users.Remove(user);
+                user.IsDelete = true;
                 await _context.SaveChangesAsync();
             }
         }

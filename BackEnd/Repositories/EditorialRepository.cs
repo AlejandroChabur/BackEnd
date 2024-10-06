@@ -1,5 +1,6 @@
 ﻿using BackEnd.Context;
 using BackEnd.Model;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
 
 namespace BackEnd.Repository
@@ -34,7 +35,9 @@ namespace BackEnd.Repository
         // Obtener todas las editoriales
         public async Task<IEnumerable<Editorials>> GetAllEditorialsAsync()
         {
-            return await _context.Editorials.ToListAsync();
+            return await _context.Editorials
+                .Where(a => !a.IsDelete)
+                .ToListAsync();
         }
 
         // Actualizar una editorial
@@ -48,7 +51,7 @@ namespace BackEnd.Repository
         public async Task DeleteEditorialAsync(int id)
         {
             var editorial = await GetEditorialByIdAsync(id);
-            _context.Editorials.Remove(editorial);
+            editorial.IsDelete = true;
             await _context.SaveChangesAsync();
         }
     }
