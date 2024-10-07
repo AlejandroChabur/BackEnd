@@ -37,6 +37,7 @@ namespace BackEnd.Services
         // Actualizar un usuario existente
         public async Task UpdateUserAsync(User user)
         {
+            
             await _userRepository.UpdateUserAsync(user);
         }
 
@@ -67,4 +68,4 @@ namespace BackEnd.Services
             return user; // Retornar el usuario si las credenciales son correctas
         }
     }
-}
+}//lol

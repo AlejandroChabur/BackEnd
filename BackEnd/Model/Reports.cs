@@ -10,7 +10,9 @@ namespace BackEnd.Model
        public int IdLoan { get; set; }
         public string Comment { get; set; }
 
-        public Loans Loans { get; set; }    
-     
+        public Loans Loans { get; set; }
+
+        public bool IsDelete { get; set; } = false;  // Valor por defecto en falso
+
     }
 }

@@ -27,7 +27,8 @@ namespace BackEnd.Repositories
         {
             return await _context.Reports
                .Include(a => a.Loans)
-                .ToListAsync();
+               .Where(a => !a.IsDelete)
+               .ToListAsync();
         }
 
         public async Task<Reports> GetReportByIdAsync(int id)
@@ -86,7 +87,7 @@ namespace BackEnd.Repositories
             var report = await _context.Reports.FindAsync(id);
             if (report != null)
             {
-                _context.Reports.Remove(report);
+                report.IsDelete = true;
                 await _context.SaveChangesAsync();
             }
         }

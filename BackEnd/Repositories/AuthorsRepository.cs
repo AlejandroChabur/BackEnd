@@ -20,6 +20,7 @@ namespace BackEnd.Repositories
         {
             return await _context.Authors
                          .Include(a => a.Person) // Incluir la información de People
+                         .Where(a => !a.IsDelete)
                          .ToListAsync();
         }
 
@@ -83,7 +84,7 @@ namespace BackEnd.Repositories
             var author = await _context.Authors.FindAsync(id);
             if (author != null)
             {
-                _context.Authors.Remove(author);
+                author.IsDelete = true;
                 await _context.SaveChangesAsync();
             }
         }

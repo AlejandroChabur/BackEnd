@@ -27,7 +27,7 @@ namespace BackEnd.Repositories
         {
             return await _context.Topics
                 //.Include(t => t.BooksXTopics)
-                
+                .Where(a => !a.IsDelete)
                 .ToListAsync();
         }
 
@@ -73,7 +73,7 @@ namespace BackEnd.Repositories
             var topic = await _context.Topics.FindAsync(id);
             if (topic != null)
             {
-                _context.Topics.Remove(topic);
+                topic.IsDelete = true;
                 await _context.SaveChangesAsync();
             }
         }

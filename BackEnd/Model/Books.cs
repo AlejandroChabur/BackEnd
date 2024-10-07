@@ -17,7 +17,10 @@ namespace BackEnd.Model
 
         public Edition Edition { get; set; }
 
-       
+        public bool IsDelete { get; set; } = false;  // Valor por defecto en falso
+
+
+
     }
 }
-//ddd
+//ddd//ya funcionapor fin
