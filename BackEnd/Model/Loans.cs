@@ -11,5 +11,7 @@ namespace BackEnd.Model
         public DateOnly LoanDate { get; set; }
         public DateOnly ReturnDate { get; set; }
        public User User { get; set; }
+
+        public bool IsDelete { get; set; } = false;  // Valor por defecto en falso
     }
 }

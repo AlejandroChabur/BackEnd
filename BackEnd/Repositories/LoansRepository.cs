@@ -53,6 +53,7 @@ namespace BackEnd.Repository
         {
             return await _context.Loans
                  .Include(a => a.User)
+                 .Where(a => !a.IsDelete)
                 .ToListAsync();
         }
 
@@ -80,7 +81,7 @@ namespace BackEnd.Repository
         public async Task DeleteLoanAsync(int id)
         {
             var loan = await GetLoanByIdAsync(id);
-            _context.Loans.Remove(loan);
+            loan.IsDelete = true;
             await _context.SaveChangesAsync();
         }
     }

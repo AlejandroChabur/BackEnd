@@ -2,6 +2,7 @@
 using BackEnd.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace BackEnd.Services
 {

@@ -29,7 +29,7 @@ namespace BackEnd.Repositories
         {
             // Suponiendo que IsDeleted es un campo que determina si el tipo de usuario está eliminado
             return await _context.UserType
-                
+                .Where(a => !a.IsDelete)
                 .ToListAsync();
         }
 
@@ -72,7 +72,7 @@ namespace BackEnd.Repositories
             var userType = await _context.UserType.FindAsync(id);
             if (userType != null)
             {
-               
+                userType.IsDelete = true;
                 await _context.SaveChangesAsync();
             }
             else

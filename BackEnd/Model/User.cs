@@ -15,7 +15,7 @@ namespace BackEnd.Model
 
        public int IdUserType { get; set; }
         public UserType UserTypes { get; set; }
-      public People Peoples { get; set; }
+        public People Peoples { get; set; }
 
         public bool IsDelete { get; set; } = false;  // Valor por defecto en falso
 

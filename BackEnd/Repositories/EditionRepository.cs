@@ -34,7 +34,10 @@ namespace BackEnd.Repository
         // Obtener todas las ediciones
         public async Task<IEnumerable<Edition>> GetAllEditionsAsync()
         {
-            return await _context.Editions.ToListAsync();
+            return await _context.Editions
+                .Where(a => !a.IsDelete)
+                .ToListAsync();
+            
         }
 
         // Actualizar una edición
@@ -48,7 +51,7 @@ namespace BackEnd.Repository
         public async Task DeleteEditionAsync(int id)
         {
             var edition = await GetEditionByIdAsync(id);
-            _context.Editions.Remove(edition);
+            edition.IsDelete = true;
             await _context.SaveChangesAsync();
         }
     }
