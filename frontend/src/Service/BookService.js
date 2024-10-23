@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://bibliotecasantotomas.somee.com/api/BookController'; // Actualizado con la nueva URL
+const API_URL = 'http://www.bibliotecasanttotomas.somee.com/api/Books'; // Actualizado con la nueva URL
 
 export const GetAllBooks = async () => {
     try {
@@ -14,7 +14,7 @@ export const GetAllBooks = async () => {
 
 export const GetBookById = async (Id) => {
     try {
-        const response = await axios.get(`${API_URL}/${Id}`); // Asegúrate de incluir la barra antes de bookId
+        const response = await axios.get(`${API_URL}/${Id}`); 
         return response.data; // Devuelve los datos del libro
     } catch (error) {
         console.error("Error fetching book by id", error);
@@ -23,19 +23,19 @@ export const GetBookById = async (Id) => {
 };
 
 export const CreateBook = async (book) => {
-    try {
-        const response = await fetch ('https://bibliotecasantotomas.somee.com/api/BookController/',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        });
+    const response = await fetch('http://www.bibliotecasanttotomas.somee.com/api/Books/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(book),
+    });
 
-        return response.data; // Devuelve el nuevo libro creado
-    } catch (error) {
-        console.error("Error creating book:", error);
-        throw new Error('Error al crear el libro'); // Lanza el error si la creación falla
+    if (!response.ok) {
+        throw new Error('Error al crear el Libro');
     }
+
+    return await response.json(); // Devuelve el nuevo conductor creado
 };
 
 export const UpdateBook = async (Id, bookData) => {
