@@ -34,7 +34,9 @@ namespace BackEnd.Repository
         // Obtener todos los tipos de identificación
         public async Task<IEnumerable<IdentificationType>> GetAllIdentificationTypesAsync()
         {
-            return await _context.IdentificationTypes.ToListAsync();
+            return await _context.IdentificationTypes
+                .Where(a => !a.IsDelete)
+                .ToListAsync();
         }
 
         // Actualizar un tipo de identificación
@@ -48,7 +50,7 @@ namespace BackEnd.Repository
         public async Task DeleteIdentificationTypeAsync(int id)
         {
             var identificationType = await GetIdentificationTypeByIdAsync(id);
-            _context.IdentificationTypes.Remove(identificationType);
+            identificationType.IsDelete = true;
             await _context.SaveChangesAsync();
         }
     }

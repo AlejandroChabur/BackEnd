@@ -61,14 +61,27 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationInsightsTelemetry();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder =>
+        {
+            builder.AllowAnyOrigin() // Permitir solicitudes desde cualquier origen
+                   .AllowAnyMethod()  // Permitir cualquier método (GET, POST, etc.)
+                   .AllowAnyHeader(); // Permitir cualquier cabecera
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//    app.Environment.IsDevelopment();
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
+
+app.UseCors("AllowAllOrigins");
 
 app.UseHttpsRedirection();
 

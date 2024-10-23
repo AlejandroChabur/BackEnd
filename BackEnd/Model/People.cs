@@ -20,6 +20,12 @@ namespace BackEnd.Model
 
         public IdentificationType IdentificationTypes { get; set; }
 
-       
+        public bool IsDelete { get; set; } = false;  // Valor por defecto en falso
+
+
+
+
+
+
     }
 }

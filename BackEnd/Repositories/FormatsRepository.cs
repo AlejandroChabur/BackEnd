@@ -34,7 +34,9 @@ namespace BackEnd.Repository
         // Obtener todos los formatos
         public async Task<IEnumerable<Formats>> GetAllFormatsAsync()
         {
-            return await _context.Formats.ToListAsync();
+            return await _context.Formats
+                .Where(a => !a.IsDelete)
+                .ToListAsync();
         }
 
         // Actualizar un formato
@@ -48,7 +50,7 @@ namespace BackEnd.Repository
         public async Task DeleteFormatAsync(int id)
         {
             var format = await GetFormatByIdAsync(id);
-            _context.Formats.Remove(format);
+            format.IsDelete = true;
             await _context.SaveChangesAsync();
         }
     }

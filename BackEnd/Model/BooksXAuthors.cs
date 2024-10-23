@@ -7,5 +7,6 @@
 
         public int AuthorsId{ get; set; }  // Clave foránea hacia Editorials
         public virtual required Authors Authors { get; set; }
+        
     }
 }

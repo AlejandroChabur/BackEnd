@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using BackEnd.Services;
+using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace BackEnd.Controllers
 {
@@ -53,6 +54,7 @@ namespace BackEnd.Controllers
             {
                 return BadRequest(ModelState);
             }
+           
 
             await _authorsService.CreateAuthorAsync(author);
 

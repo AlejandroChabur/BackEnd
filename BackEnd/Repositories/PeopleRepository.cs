@@ -28,6 +28,7 @@ namespace BackEnd.Repositories
         {
             return await _context.People
                 .Include(a=> a.IdentificationTypes)
+                .Where(a => !a.IsDelete)
                 .ToListAsync();
         }
 
@@ -93,7 +94,7 @@ namespace BackEnd.Repositories
             var person = await _context.People.FindAsync(id);
             if (person != null)
             {
-                _context.People.Remove(person);
+                person.IsDelete = true;
                 await _context.SaveChangesAsync();
             }
         
