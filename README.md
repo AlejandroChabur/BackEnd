@@ -11,3 +11,5 @@ Da informacion por el id dado
 Con este iniciarias sesion basicamente
 # DELETE
 Se borra informacion pero solo quedara en la BD como True no se borra totalmente.
+
+https://bibliotecasantotomas.somee.com/swagger/index.html
